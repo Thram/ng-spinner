@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="styles/spinner.css">
+</head>
+<body ng-app="testApp">
+<div ng-controller="testCtrl" style="text-align: center;">
+    <button ng-click="call()" style="margin-top: 200px;height: 50px; width: 100px;">
+        AJAX Call
+    </button>
+</div>
+<spinner></spinner>
+<script type="application/javascript"
+        src="http://code.jquery.com/jquery.min.js"></script>
+<script type="application/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js"></script>
+<script type="application/javascript" src="scripts/spinner.js"></script>
+<script>
+
+    angular.module("testApp", ['ngSpinner']).config(function ($httpProvider) {
+        //Enable cross domain calls
+        $httpProvider.defaults.useXDomain = true;
+
+        //Remove the header used to identify ajax call  that would prevent CORS from working
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }).controller('testCtrl', function ($scope, $http) {
+                $scope.call = function () {
+                    var url = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&region=us&address=123";
+                    $http.get(url)
+                }
+            })
+
+</script>
+</body>
+</html>
